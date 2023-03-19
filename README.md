@@ -12,7 +12,7 @@ Updates ( 3/19/2023 ) ---
 
 - Created an Application Layer.
 
-- Segregate the Infra and Domain from the Console ( View Layer per say ), now the console calls the Application and the application deals with the info comunicating with the services in the domain layer.
+- Segregate the Infra and Domain from the Console ( Presentation Layer per say ), now the console calls the Application and the application deals with the info comunicating with the services in the domain layer.
 
 - Made a Config fin layer for clean code, i didnt want to polute the Application layer.
 
