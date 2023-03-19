@@ -17,6 +17,17 @@ namespace CreditSuisse.Domain.Services.Base
             _repository = repository;
         }
 
+        public bool InsertRecord(TEntity objeto)
+        {
+
+            return _repository.InsertRecord(objeto);
+        }
+
+        public bool UpdateRecord(TEntity objeto)
+        {
+            return _repository.UpdateRecord(objeto);
+        }
+
         public Task CommitAsync()
         {
             return _repository.CommitAsync();

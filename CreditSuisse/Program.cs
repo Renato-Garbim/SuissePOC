@@ -1,7 +1,8 @@
-﻿using CreditSuisse.Domain.Entities;
-using CreditSuisse.Domain.Entities.Enum;
+﻿using CreditSuisse.Application.Automapper;
+using CreditSuisse.Domain.Entities;
 using CreditSuisse.Domain.Services;
 using CreditSuisse.Domain.Services.Interfaces;
+using CreditSuisse.Framework.Enum;
 using CreditSuisse.Infra.DAL;
 using CreditSuisse.Infra.Repositories;
 using CreditSuisse.Infra.Repositories.Interfaces;
@@ -87,7 +88,7 @@ namespace CreditSuisse
 
             DateTime tradePendingPayment = DateTime.Parse(values.First());
 
-            return new Trade(tradeValue, clientSector, tradePendingPayment);
+            return new Trade(0, Guid.NewGuid(), tradeValue, clientSector, tradePendingPayment);
 
         }
 
@@ -96,6 +97,8 @@ namespace CreditSuisse
             services.AddScoped<ITradeRepository, TradeRepository>()
                 .AddScoped<ITradeService, TradeService>()
                 .AddScoped<DbContextMock>();
+
+            services.AddAutoMapper(typeof(BootstraperAutomapper).Assembly);            
         }
 
     }
