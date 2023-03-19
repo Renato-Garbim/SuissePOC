@@ -20,7 +20,7 @@ Updates ( 3/19/2023 ) ---
 
 - Still inted to create some CRUD tests project just to shows how the layers could interact better, but i used Reflection, Generics and clean code to build a simple mock just for show how i would make.
 
-- I am very concern with clean code, SOLID and a easily manageable code so i just created a private method for each Bussiness Rule in my service and them made a public method that can be consumed for set the Category, i believe that in a real case scenario a lot of this domain would differ, but for the exercise i think this simple aproach goes well.
+- I am very concern with clean code, SOLID and a easily maintainable code so i just created a private method for each Bussiness Rule in my service and them made a public method that can be consumed for set the Category, i believe that in a real case scenario a lot of this domain would differ, but for the exercise i think this simple aproach goes well.
 
 Question 2:
 
