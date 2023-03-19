@@ -23,8 +23,29 @@ namespace CreditSuisse.Infra.Base
             if (db == null)
                 throw new ArgumentNullException(nameof(db));
 
+            //EntityFramework Implemetation
             //DBSet = Db.Set<TEntity>();
-           // _strConexao = Db.Database.GetDbConnection().ConnectionString;
+            // _strConexao = Db.Database.GetDbConnection().ConnectionString;
+        }
+
+        public virtual bool InsertRecord(TEntity obj)
+        {
+            var sucess = false;
+
+            //Db.GetType().GetProperty
+                //Db.tradeBase.Add(obj);
+                //AlterarBanco();
+
+                sucess = true;
+
+            return sucess;
+        }
+
+        public virtual bool UpdateRecord(TEntity obj)
+        {
+            var sucess = false;
+
+            return sucess;
         }
 
         public Task CommitAsync()

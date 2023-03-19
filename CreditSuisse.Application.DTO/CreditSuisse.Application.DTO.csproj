@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CreditSuisse.Framework\CreditSuisse.Framework.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,6 @@
 ﻿using CreditSuisse.Domain.Entities;
-using CreditSuisse.Domain.Entities.Enum;
 using CreditSuisse.Domain.Services.Base;
+using CreditSuisse.Framework.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,10 +1,8 @@
-﻿using CreditSuisse.Domain.Entities;
-using CreditSuisse.Domain.Entities.Enum;
-using CreditSuisse.Domain.Services;
-using CreditSuisse.Domain.Services.Interfaces;
-using CreditSuisse.Infra.DAL;
-using CreditSuisse.Infra.Repositories;
-using CreditSuisse.Infra.Repositories.Interfaces;
+﻿using CreditSuisse.Application.Automapper;
+using CreditSuisse.Application.DTOs;
+using CreditSuisse.Application.Interfaces;
+using CreditSuisse.Framework.Enum;
+using CreditSuisse.IOC.CrussCutting;
 using CreditSuisse.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +16,7 @@ namespace CreditSuisse
             ConfigureServices(serviceCollection);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var tradeService = serviceProvider.GetService<ITradeService>();
+            var tradeAppService = serviceProvider.GetService<ITradeAppService>();
 
             var model = new TradePortfolioModel();
 
@@ -51,7 +49,7 @@ namespace CreditSuisse
 
                     string firstTrade = Console.ReadLine();
 
-                    Trade operacao = CreateTradeFromStringValue(firstTrade);
+                    TradeDTO operacao = CreateTradeFromStringValue(firstTrade);
 
                     model.TradeList.Add(operacao);
                 }
@@ -60,8 +58,8 @@ namespace CreditSuisse
 
                 foreach (var operacao in model.TradeList)
                 {
-                    var category = tradeService.GetCategoryForTrade(operacao, model.ReferenceDate);
-                    listCategories.Add(category.ToString().ToUpper());
+                    //var category = tradeService.GetCategoryForTrade(operacao, model.ReferenceDate);
+                    //listCategories.Add(category.ToString().ToUpper());
                 }
 
                 foreach(var category in listCategories)
@@ -73,7 +71,7 @@ namespace CreditSuisse
 
         }
 
-        public static Trade CreateTradeFromStringValue(string tradeBody)
+        public static TradeDTO CreateTradeFromStringValue(string tradeBody)
         {
             var values = tradeBody.Split().ToList();
 
@@ -87,15 +85,20 @@ namespace CreditSuisse
 
             DateTime tradePendingPayment = DateTime.Parse(values.First());
 
-            return new Trade(tradeValue, clientSector, tradePendingPayment);
+            var trade = new TradeDTO();
+            trade.Value = tradeValue;
+            trade.ClientSector= clientSector;
+            trade.NextPaymentDate = tradePendingPayment;
+
+            return trade;
 
         }
 
         public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<ITradeRepository, TradeRepository>()
-                .AddScoped<ITradeService, TradeService>()
-                .AddScoped<DbContextMock>();
+        {            
+            SuisseBootstraper.RegisterServices(services);
+
+            services.AddAutoMapper(typeof(BootstraperAutomapper).Assembly);            
         }
 
     }

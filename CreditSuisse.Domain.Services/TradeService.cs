@@ -1,7 +1,7 @@
 ﻿using CreditSuisse.Domain.Entities;
-using CreditSuisse.Domain.Entities.Enum;
 using CreditSuisse.Domain.Services.Base;
 using CreditSuisse.Domain.Services.Interfaces;
+using CreditSuisse.Framework.Enum;
 using CreditSuisse.Infra.Base;
 using CreditSuisse.Infra.Repositories.Interfaces;
 using System;

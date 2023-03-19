@@ -8,5 +8,7 @@ namespace CreditSuisse.Infra.Base
 {
     public interface IRepositoryBase<TEntity> : IUnityOfWork where TEntity : class
     {
+        bool InsertRecord(TEntity obj);
+        bool UpdateRecord(TEntity obj);
     }
 }
