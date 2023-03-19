@@ -38,8 +38,7 @@ namespace CreditSuisse
             }
             else
             {
-                model.TradeQuantity = tradeAmountInt;
-                var listCategories = new List<string>();
+                model.TradeQuantity = tradeAmountInt;                
 
                 Console.WriteLine("Ok, now lets insert a trade at time, please, follow this pattern: 'value sector paymentDate',  lets go.");
 
@@ -47,51 +46,27 @@ namespace CreditSuisse
                 {
                     Console.WriteLine("Insert Trade: ");
 
-                    string firstTrade = Console.ReadLine();
+                    string tradeInput = Console.ReadLine();
 
-                    TradeDTO operacao = CreateTradeFromStringValue(firstTrade);
+                    TradeDTO operacao = tradeAppService.CreateTradeFromStringValue(tradeInput);
 
                     model.TradeList.Add(operacao);
                 }
 
-                // This could be in a Application Layer
+                var listCategories = tradeAppService.GetCategoryForEachTradeInPortfolio(model.TradeList, model.ReferenceDate);
 
-                foreach (var operacao in model.TradeList)
-                {
-                    //var category = tradeService.GetCategoryForTrade(operacao, model.ReferenceDate);
-                    //listCategories.Add(category.ToString().ToUpper());
-                }
-
-                foreach(var category in listCategories)
-                {
-                    Console.WriteLine(category);
-                }
+                DisplayStringValueCategoriesFromPortfolio(listCategories);
                 
             }
 
         }
 
-        public static TradeDTO CreateTradeFromStringValue(string tradeBody)
+        public static void DisplayStringValueCategoriesFromPortfolio(List<CategoriesEnum> categories)
         {
-            var values = tradeBody.Split().ToList();
-
-            double tradeValue = Convert.ToDouble(values.First());
-
-            values.RemoveAt(0);
-
-            ClientSectorEnum clientSector = (ClientSectorEnum)Enum.Parse(typeof(ClientSectorEnum), values.First().ToLower(), true);
-
-            values.RemoveAt(0);
-
-            DateTime tradePendingPayment = DateTime.Parse(values.First());
-
-            var trade = new TradeDTO();
-            trade.Value = tradeValue;
-            trade.ClientSector= clientSector;
-            trade.NextPaymentDate = tradePendingPayment;
-
-            return trade;
-
+            foreach (var category in categories)
+            {
+                Console.WriteLine(category.ToString());
+            }
         }
 
         public static void ConfigureServices(IServiceCollection services)
