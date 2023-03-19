@@ -2,7 +2,11 @@
 SuissePoc Request
 
 Some insights:
-I could add easily a test layer
+
+I could add easily a test layer.
+I didnt set any kind of database, just create some List to emulate the DbContext.
+If i got some time i will make a test layer and implement EF in memmory for a better showcase of how it would work the Infra Layer.
+Feel free to check my git branchs and see how i manage my commits.
 
 Updates ( 3/19/2023 ) --- 
 
