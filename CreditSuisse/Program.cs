@@ -1,4 +1,5 @@
 ﻿using CreditSuisse.Application.Automapper;
+using CreditSuisse.Application.DTOs;
 using CreditSuisse.Domain.Entities;
 using CreditSuisse.Domain.Services;
 using CreditSuisse.Domain.Services.Interfaces;
@@ -52,7 +53,7 @@ namespace CreditSuisse
 
                     string firstTrade = Console.ReadLine();
 
-                    Trade operacao = CreateTradeFromStringValue(firstTrade);
+                    TradeDTO operacao = CreateTradeFromStringValue(firstTrade);
 
                     model.TradeList.Add(operacao);
                 }
@@ -74,7 +75,7 @@ namespace CreditSuisse
 
         }
 
-        public static Trade CreateTradeFromStringValue(string tradeBody)
+        public static TradeDTO CreateTradeFromStringValue(string tradeBody)
         {
             var values = tradeBody.Split().ToList();
 
@@ -88,7 +89,12 @@ namespace CreditSuisse
 
             DateTime tradePendingPayment = DateTime.Parse(values.First());
 
-            return new Trade(0, Guid.NewGuid(), tradeValue, clientSector, tradePendingPayment);
+            var trade = new TradeDTO();
+            trade.Value = tradeValue;
+            trade.ClientSector= clientSector;
+            trade.NextPaymentDate = tradePendingPayment;
+
+            return trade;
 
         }
 
