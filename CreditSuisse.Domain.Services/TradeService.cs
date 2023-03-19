@@ -6,6 +6,7 @@ using CreditSuisse.Infra.Base;
 using CreditSuisse.Infra.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -21,18 +22,34 @@ namespace CreditSuisse.Domain.Services
             _tradeRepository = repository;
         }
 
-        public CategoriesEnum GetCategoryForTrade(Trade trade, DateTime ReferenceDate)
+        public CategoriesEnum GetCategoryForTrade(Trade trade, DateTime referenceDate)
         {
-            var ts = new TimeSpan();
-            ts = ReferenceDate - trade.NextPaymentDate;
-            double minValue = Convert.ToDouble(1000000);
-
-
-            if (ts.Days > 30) return CategoriesEnum.Expired;
-            if (trade.Value > minValue && trade.ClientSector.ToString().ToLower().Equals("private")) return CategoriesEnum.Highrisk;
-            if (trade.Value > minValue && trade.ClientSector.ToString().ToLower().Equals("public")) return CategoriesEnum.Mediumrisk;
-
+            if (IsExpired(trade.NextPaymentDate, referenceDate)) return CategoriesEnum.Expired;
+            if (IsMediumRisk(trade.Value, trade.ClientSector)) return CategoriesEnum.Mediumrisk;
+            if (IsHighRisk(trade.Value, trade.ClientSector)) return CategoriesEnum.Highrisk;
+                        
             return CategoriesEnum.None;
         }
+
+        private bool IsExpired(DateTime nextPaymentDate, DateTime ReferenceDate)
+        {
+            var ts = new TimeSpan();
+            ts = ReferenceDate - nextPaymentDate;
+
+            return ts.Days > 30;
+        }
+
+        private bool IsMediumRisk(double tradeValue, ClientSectorEnum clientSector)
+        {
+            double paramValue = Convert.ToDouble(1000000);
+            return tradeValue > paramValue && clientSector.ToString().ToLower().Equals("public");
+        }
+
+        private bool IsHighRisk(double tradeValue, ClientSectorEnum clientSector)
+        {
+            double paramValue = Convert.ToDouble(1000000);
+            return tradeValue > paramValue && clientSector.ToString().ToLower().Equals("private");
+        }
+
     }
 }
