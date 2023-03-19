@@ -1,12 +1,8 @@
 ﻿using CreditSuisse.Application.Automapper;
 using CreditSuisse.Application.DTOs;
-using CreditSuisse.Domain.Entities;
-using CreditSuisse.Domain.Services;
-using CreditSuisse.Domain.Services.Interfaces;
+using CreditSuisse.Application.Interfaces;
 using CreditSuisse.Framework.Enum;
-using CreditSuisse.Infra.DAL;
-using CreditSuisse.Infra.Repositories;
-using CreditSuisse.Infra.Repositories.Interfaces;
+using CreditSuisse.IOC.CrussCutting;
 using CreditSuisse.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +16,7 @@ namespace CreditSuisse
             ConfigureServices(serviceCollection);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var tradeService = serviceProvider.GetService<ITradeService>();
+            var tradeAppService = serviceProvider.GetService<ITradeAppService>();
 
             var model = new TradePortfolioModel();
 
@@ -62,8 +58,8 @@ namespace CreditSuisse
 
                 foreach (var operacao in model.TradeList)
                 {
-                    var category = tradeService.GetCategoryForTrade(operacao, model.ReferenceDate);
-                    listCategories.Add(category.ToString().ToUpper());
+                    //var category = tradeService.GetCategoryForTrade(operacao, model.ReferenceDate);
+                    //listCategories.Add(category.ToString().ToUpper());
                 }
 
                 foreach(var category in listCategories)
@@ -99,10 +95,8 @@ namespace CreditSuisse
         }
 
         public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<ITradeRepository, TradeRepository>()
-                .AddScoped<ITradeService, TradeService>()
-                .AddScoped<DbContextMock>();
+        {            
+            SuisseBootstraper.RegisterServices(services);
 
             services.AddAutoMapper(typeof(BootstraperAutomapper).Assembly);            
         }

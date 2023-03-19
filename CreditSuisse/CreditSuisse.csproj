@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,9 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CreditSuisse.Application.Automapper\CreditSuisse.Application.Automapper.csproj" />
-    <ProjectReference Include="..\CreditSuisse.Domain.Services\CreditSuisse.Domain.Services.csproj" />
     <ProjectReference Include="..\CreditSuisse.Framework\CreditSuisse.Framework.csproj" />
-    <ProjectReference Include="..\CreditSuisse.Infra\CreditSuisse.Infra.csproj" />
+    <ProjectReference Include="..\CreditSuisse.IOC.CrussCutting\CreditSuisse.IOC.CrussCutting.csproj" />
   </ItemGroup>
 
 </Project>
